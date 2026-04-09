@@ -1,0 +1,22 @@
+Id,Name,Price,Stock,ThresHold
+1,Wireless Mouse,1200,6,10
+2,Mechanical Keyboard,3500,30,5
+3,Gaming Headset,2800,0,8
+4,USB-C Charger,800,100,20
+5,External Hard Drive 1TB,4500,25,5
+6,Smartphone Stand,600,75,15
+7,Bluetooth Speaker,2200,35,7
+8,LED Monitor 24 inch,9500,20,4
+9,Laptop Cooling Pad,1200,60,12
+10,Portable Power Bank,1500,80,16
+11,HDMI Cable,400,200,30
+12,Smartwatch,5000,18,4
+13,Webcam HD,2700,22,5
+14,Wireless Earbuds,3200,45,9
+15,Portable SSD 512GB,6000,15,3
+16,Smart LED Bulb,900,120,25
+17,WiFi Router,3500,28,6
+18,Laptop Backpack,1800,50,10
+19,Graphic Tablet,4200,12,3
+20,Noise Cancelling Headphones,7500,10,2
+21,Cube,100,50,10
