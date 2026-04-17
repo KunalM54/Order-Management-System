@@ -1,170 +1,168 @@
 # Order Management System
 
+A Spring Boot REST API for managing products, processing orders with GST billing, and sending notifications via WhatsApp and email.
+
 ## Overview
-Order Management System is a Spring Boot backend project for product and order handling with inventory updates, billing calculation, WhatsApp notifications, low-stock email alerts, and scheduled product report generation in CSV format.
+
+This application provides product inventory management with stock tracking and threshold alerts. It processes customer orders with automatic bill generation including 18% GST calculation, integrates with Twilio for WhatsApp notifications, and sends email alerts for low stock conditions.
 
 ## Features
-- Add multiple products.
-- Fetch all products.
-- Purchase flow with request validation checks.
-- Product existence and stock availability validation.
-- Bill generation with GST calculation (18%).
-- Payment simulation (success/failure).
-- Auto stock reduction after successful order.
-- Low-stock email alert when stock reaches threshold.
-- WhatsApp message on successful order.
-- WhatsApp message on payment failure.
-- Scheduled CSV report generation and email attachment delivery.
+
+* Product Management
+* Order Processing with Bill Generation
+* 18% GST Calculation
+* WhatsApp Order Notifications via Twilio
+* Low Stock Email Alerts
+* Scheduled CSV Product Reports
 
 ## Tech Stack
-- Java 17
-- Spring Boot
-- Spring Web MVC
-- Spring Data JPA
-- Spring Validation (DTO annotations present)
-- Spring Mail
-- Spring Scheduling
-- MySQL
-- Twilio WhatsApp API
-- Maven
+
+* Java 17
+* Spring Boot 4.0.3
+* Spring Data JPA
+* Spring Web MVC
+* Spring Validation
+* Spring Mail
+* MySQL
+* Twilio SDK
 
 ## System Design / How It Works
-1. Product data is stored in the `products` table.
-2. Client places order using `/purchase`.
-3. Service validates:
-   - Name
-   - Mobile number (10 digits)
-   - Product ID
-   - Quantity (> 0)
-4. Product is fetched by `productId` and stock is checked.
-5. Bill is calculated:
-   - `total = price * quantity`
-   - `gst = total * 18%`
-   - `finalAmount = total + gst`
-6. Payment is simulated randomly.
-   - On failure: WhatsApp payment-failed message is sent.
-   - On success:
-     - stock is reduced
-     - order is saved in `orders`
-     - low-stock alert email is sent if `stock <= threshHold`
-     - WhatsApp order confirmation is sent
-7. Scheduler runs every minute and:
-   - fetches all products
-   - generates `products_report.csv`
-   - sends report as email attachment
+
+1. Save products with name, price, stock quantity, and threshold level
+2. Customer places order via `/purchase` endpoint with name, mobile, productId, quantity
+3. Validate request fields and check product availability
+4. Calculate bill: subtotal = price × quantity, GST = subtotal × 18%, total = subtotal + GST
+5. Process payment (random success/failure simulation)
+6. On payment failure: send WhatsApp message to customer
+7. On payment success: reduce product stock, save order, send WhatsApp confirmation
+8. If stock falls below threshold: send low stock alert email
+9. Scheduled job runs every minute: generates CSV report and emails it
 
 ## Project Structure
+
 ```text
-src/main/java/com/ordermanagement/system
+com.example.ordermanagementsystem
+├── Application.java
 ├── controller
 │   └── ProductsController.java
 ├── service
 │   ├── ProductsService.java
 │   ├── OrdersService.java
-│   ├── SmsAndWhatsAppService.java
 │   ├── EmailService.java
+│   ├── SmsAndWhatsAppService.java
 │   ├── CsvService.java
 │   └── ProductReportScheduler.java
-├── entity
-│   ├── Products.java
-│   └── Orders.java
 ├── repository
 │   ├── ProductsRepository.java
 │   └── OrdersRepository.java
-├── dto
-│   ├── RequestOrdersDto.java
-│   └── BillDetails.java
-└── Application.java
+├── entity
+│   ├── Products.java
+│   └── Orders.java
+└── dto
+    ├── RequestOrdersDto.java
+    └── BillDetails.java
 ```
 
 ## Setup & Installation
-1. Install Java 17, Maven, and MySQL.
-2. Create a MySQL database (currently configured as `ecommerce`).
+
+1. Ensure Java 17 and Maven are installed
+2. Create MySQL database
 3. Configure `src/main/resources/application.properties`:
-   - `spring.datasource.username`
-   - `spring.datasource.password`
-   - `twilio.account.sid`
-   - `twilio.auth.token`
-   - `twilio.whatsapp.number`
-   - `spring.mail.username`
-   - `spring.mail.password`
-4. Build and run:
-   ```bash
-   mvn clean install
-   mvn spring-boot:run
+   ```properties
+   spring.datasource.url=jdbc:mysql://localhost:3306/YOUR_DATABASE_NAME
+   spring.datasource.username=YOUR_DB_USERNAME
+   spring.datasource.password=YOUR_DB_PASSWORD
+   
+   twilio.account.sid=YOUR_TWILIO_ACCOUNT_SID
+   twilio.auth.token=YOUR_TWILIO_AUTH_TOKEN
+   twilio.whatsapp.number=YOUR_TWILIO_WHATSAPP_NUMBER
+   
+   spring.mail.host=smtp.gmail.com
+   spring.mail.port=587
+   spring.mail.username=YOUR_EMAIL_USERNAME
+   spring.mail.password=YOUR_EMAIL_PASSWORD
    ```
+4. Run `mvn spring-boot:run`
 
 ## API Endpoints
 
-### 1) Save Products
-- **POST** `/saveProduct`
-- **Body**: list of products
+Base path: `http://localhost:8080/`
 
-Example:
-```json
+### 1) Save Products
+
+* **POST** `/saveProduct`
+* **Request Body**: Array of products
+
+```http
+POST /saveProduct
 [
-  {
-    "productName": "Laptop",
-    "price": 50000,
-    "stock": 15,
-    "threshHold": 5
-  }
+  {"productName":"Laptop","price":50000,"stock":10,"threshHold":3}
 ]
 ```
 
 ### 2) Get All Products
-- **GET** `/getAllProducts`
 
-### 3) Purchase Product
-- **POST** `/purchase`
-- **Body**:
-```json
-{
-  "name": "Kunal",
-  "mobileNumber": "9876543210",
-  "productId": 1,
-  "quantity": 2
-}
+* **GET** `/getAllProducts`
+
+```http
+GET /getAllProducts
 ```
 
-**Current response behavior:**
-- Returns validation/error text if any check fails.
-- Returns `"Success"` when purchase flow completes in controller.
+### 3) Purchase Product
+
+* **POST** `/purchase`
+* **Request Body**: Order details
+
+```http
+POST /purchase
+{
+  "name":"John",
+  "mobileNumber":"9876543210",
+  "productId":1,
+  "quantity":2
+}
+```
 
 ## Database Schema
 
 ### `products`
-- `id` (PK, auto-generated)
-- `product_name`
-- `price`
-- `stock`
-- `thresh_hold`
+
+* `id` (PK)
+* `productName`
+* `price`
+* `stock`
+* `threshHold`
 
 ### `orders`
-- `id` (PK, auto-generated)
-- `name` (not null)
-- `mobile_number` (not null, length 10)
-- `product_id` (not null)
-- `quantity` (not null)
-- `total`
-- `gst_on_total`
-- `total_amount`
+
+* `id` (PK)
+* `name`
+* `mobileNumber`
+* `productId`
+* `quantity`
+* `total`
+* `gstOnTotal`
+* `totalAmount`
 
 ## Configuration Notes
-- `spring.jpa.hibernate.ddl-auto=update` is enabled.
-- Scheduling is enabled with `@EnableScheduling`.
-- Report scheduler cron: `0 * * * * ?` (every minute).
-- Report receiver is read from:
-  - `app.report.email.to` if set
-  - otherwise fallback to `spring.mail.username`
-- From email is read from:
-  - `app.mail.from` if set
-  - otherwise fallback to `spring.mail.username`
+
+* `spring.application.name=ordermanagementsystem`
+* `spring.datasource.url=jdbc:mysql://localhost:3306/YOUR_DATABASE_NAME`
+* `spring.datasource.username=YOUR_DB_USERNAME`
+* `spring.datasource.password=YOUR_DB_PASSWORD`
+* `spring.jpa.hibernate.ddl-auto=update`
+* `twilio.account.sid=YOUR_TWILIO_ACCOUNT_SID`
+* `twilio.auth.token=YOUR_TWILIO_AUTH_TOKEN`
+* `twilio.whatsapp.number=YOUR_TWILIO_WHATSAPP_NUMBER`
+* `spring.mail.host=smtp.gmail.com`
+* `spring.mail.port=587`
+* `spring.mail.username=YOUR_EMAIL_USERNAME`
+* `spring.mail.password=YOUR_EMAIL_PASSWORD`
 
 ## Future Improvements
-- Add `@Valid` in controller request handling to use DTO validation annotations directly.
-- Return structured API responses instead of plain strings.
-- Add global exception handling.
-- Add order history and order fetch APIs.
-- Add unit and integration tests.
-- Move payment simulation to real payment gateway integration.
+
+* Add authentication and authorization
+* Implement actual payment gateway integration
+* Add order status tracking
+* Add pagination to product listing
+* Support multiple payment methods
