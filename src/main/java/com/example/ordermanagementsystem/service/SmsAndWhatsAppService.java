@@ -1,9 +1,9 @@
-package com.ordermanagement.system.service;
+package com.example.ordermanagementsystem.service;
 
-import com.ordermanagement.system.dto.RequestOrdersDto;
-import com.ordermanagement.system.entity.Orders;
-import com.ordermanagement.system.entity.Products;
-import com.ordermanagement.system.repository.ProductsRepository;
+import com.example.ordermanagementsystem.dto.RequestOrdersDto;
+import com.example.ordermanagementsystem.entity.Orders;
+import com.example.ordermanagementsystem.entity.Products;
+import com.example.ordermanagementsystem.repository.ProductsRepository;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;

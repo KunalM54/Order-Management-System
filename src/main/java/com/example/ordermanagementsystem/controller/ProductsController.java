@@ -1,9 +1,9 @@
-package com.ordermanagement.system.controller;
+package com.example.ordermanagementsystem.controller;
 
-import com.ordermanagement.system.dto.RequestOrdersDto;
-import com.ordermanagement.system.entity.Products;
-import com.ordermanagement.system.service.OrdersService;
-import com.ordermanagement.system.service.ProductsService;
+import com.example.ordermanagementsystem.dto.RequestOrdersDto;
+import com.example.ordermanagementsystem.entity.Products;
+import com.example.ordermanagementsystem.service.OrdersService;
+import com.example.ordermanagementsystem.service.ProductsService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

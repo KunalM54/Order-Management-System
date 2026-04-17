@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.ordermanagement</groupId>
-	<artifactId>Order-Management-System</artifactId>
+	<artifactId>ordermanagementsystem</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Order-Management-System</name>
+	<name>ordermanagementsystem</name>
 	<description/>
 	<url/>
 	<licenses>

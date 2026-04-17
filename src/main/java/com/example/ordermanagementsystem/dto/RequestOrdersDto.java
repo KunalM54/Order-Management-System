@@ -1,4 +1,4 @@
-package com.ordermanagement.system.dto;
+package com.example.ordermanagementsystem.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

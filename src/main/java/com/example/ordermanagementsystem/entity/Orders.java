@@ -1,4 +1,4 @@
-package com.ordermanagement.system.entity;
+package com.example.ordermanagementsystem.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

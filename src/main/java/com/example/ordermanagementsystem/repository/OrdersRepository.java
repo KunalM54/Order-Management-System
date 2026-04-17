@@ -1,6 +1,6 @@
-package com.ordermanagement.system.repository;
+package com.example.ordermanagementsystem.repository;
 
-import com.ordermanagement.system.entity.Orders;
+import com.example.ordermanagementsystem.entity.Orders;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OrdersRepository

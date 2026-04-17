@@ -1,6 +1,6 @@
-package com.ordermanagement.system.repository;
+package com.example.ordermanagementsystem.repository;
 
-import com.ordermanagement.system.entity.Products;
+import com.example.ordermanagementsystem.entity.Products;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProductsRepository

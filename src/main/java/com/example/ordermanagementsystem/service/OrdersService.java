@@ -1,11 +1,11 @@
-package com.ordermanagement.system.service;
+package com.example.ordermanagementsystem.service;
 
-import com.ordermanagement.system.dto.BillDetails;
-import com.ordermanagement.system.dto.RequestOrdersDto;
-import com.ordermanagement.system.entity.Orders;
-import com.ordermanagement.system.entity.Products;
-import com.ordermanagement.system.repository.OrdersRepository;
-import com.ordermanagement.system.repository.ProductsRepository;
+import com.example.ordermanagementsystem.dto.BillDetails;
+import com.example.ordermanagementsystem.dto.RequestOrdersDto;
+import com.example.ordermanagementsystem.entity.Orders;
+import com.example.ordermanagementsystem.entity.Products;
+import com.example.ordermanagementsystem.repository.OrdersRepository;
+import com.example.ordermanagementsystem.repository.ProductsRepository;
 import java.util.Optional;
 import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;

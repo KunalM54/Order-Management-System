@@ -1,4 +1,4 @@
-package com.ordermanagement.system.dto;
+package com.example.ordermanagementsystem.dto;
 
 public class BillDetails {
     private double total;

@@ -1,7 +1,7 @@
-package com.ordermanagement.system.service;
+package com.example.ordermanagementsystem.service;
 
-import com.ordermanagement.system.entity.Products;
-import com.ordermanagement.system.repository.ProductsRepository;
+import com.example.ordermanagementsystem.entity.Products;
+import com.example.ordermanagementsystem.repository.ProductsRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

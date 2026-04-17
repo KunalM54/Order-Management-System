@@ -1,6 +1,6 @@
-package com.ordermanagement.system.service;
+package com.example.ordermanagementsystem.service;
 
-import com.ordermanagement.system.entity.Products;
+import com.example.ordermanagementsystem.entity.Products;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;

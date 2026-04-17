@@ -1,4 +1,4 @@
-package com.ordermanagement.system.entity;
+package com.example.ordermanagementsystem.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
